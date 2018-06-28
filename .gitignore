@@ -1,14 +1,8 @@
 .DS_Store
-.sfdx
+.idea
 .project
 .salesforce
 .settings
-node_modules
-.idea
-destroy.sh
-envvars.sh
-test.sh
-salesforcedx.sh
+.sfdx
 .vscode
-mdapiout
-test.yml
+node_modules

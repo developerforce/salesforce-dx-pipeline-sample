@@ -2,7 +2,7 @@
 
 This sample uses unlocked second generation packages (2GPs) to deploy project updates. If you're looking to perform metadata deploys instead, please use [https://github.com/wadewegner/salesforce-dx-pipeline-mdapi-sample](https://github.com/wadewegner/salesforce-dx-pipeline-mdapi-sample).
 
-Using this sample app and the resources in this repo, you can setup a Heroku Pipeline to drive CI / CD for Salesforce DX. This sample uses the [salesforce-dx-buildpack](https://github.com/heroku/salesforce-buildpack) and the [salesforce-cli-buildpack](https://github.com/heroku/salesforce-cli-buildpack).
+Using this sample app and the resources in this repo, you can setup a Heroku Pipeline to drive CI / CD for Salesforce DX. This sample uses the [salesforce-buildpack](https://github.com/heroku/salesforce-buildpack) and the [salesforce-cli-buildpack](https://github.com/heroku/salesforce-cli-buildpack).
 
 ![image](https://user-images.githubusercontent.com/746259/36068129-5c8a19b2-0e82-11e8-96b5-a9fed295a33d.png)
 
@@ -20,14 +20,16 @@ That's it. Along with the `setup.sh` script you find in this repo, the buildpack
 
 2. Install the [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli).
 
-3. Log into the four orgs you'll use with the Salesforce CLI and give them aliases:
+3. Log into to the four orgs you'll use with the Salesforce CLI, using `force:auth:web:login` command, and give them aliases:
 
     - **Dev Hub (e.g.. "HubOrg")**: this will create scratch orgs for your Review Apps
     - **Development Org (e.g. "DevOrg")**: this is the first environment you'll update using a package deploy
     - **Staging Org (e.g. "TestOrg")**: this is the first environment from which you'll promote your code via release phase
     - **Prod Org : "ProdOrg"**: this is your production org
 
-    Note: you could cheat and, simply for demo purposes, use the same org for the DevOrg, TestOrg, and ProdOrg.
+    Note: You could cheat and, simply for demo purposes, use the same org for the DevOrg, TestOrg, and ProdOrg.
+
+    Note: Do not use `force:auth:jwt:grant` command as it does not provide a refresh token nor a `sfdxAuthUrl` from `force:org:display --verbose` command used by the `setup.sh`.
 
 4. Ensure you see all four orgs when you run `sfdx force:org:list`.
 
@@ -40,24 +42,22 @@ That's it. Along with the `setup.sh` script you find in this repo, the buildpack
 8. Create an unlocked package in your hub org:
 
 ```
-sfdx force:package2:create -n <your package name here> -d "My package yo" -o Unlocked -e -u <your hub org alias here>
+sfdx force:package:create -n <PACKAGE_NAME> -d <PACKAGE_DESCRIPTION> -t Unlocked -e -v <DEV_HUB_USERNAME>
 ```
 
-9. Update the `sfdx-project.json` to use your package ID.
+9. Run `./setup.sh`.
 
-10. Run `./setup.sh`.
+10. Open your pipeline: `heroku pipelines:open <PIPELINE_NAME>`
 
-11. Open your pipeline: `heroku pipelines:open <YOURPIPELINENAME>`
-
-6. For the development stage, click the expansion button and then click **Configure automatic deploys..**. Then click **Enable Automatic Deploys**. Do not check "Wait for CI to pass before deploy" unless you have CI setup.
+11. For the development stage, click the expansion button and then click **Configure automatic deploys..**. Then click **Enable Automatic Deploys**. Do not check "Wait for CI to pass before deploy" unless you have CI setup.
 
 Now you're all set.
 
 ## Usage
 
-To demo, simply submit a pull request. It's easiest to do through the Github UI. Simply edit a page, then instead of committing directly to the branch, create a pull request. Once created, the review app is ready to go. When the pull request is accepted, the review app is deleted and the application is deployed to your staging org.
+To demo, simply submit a pull request. It's easiest to do through the GitHub UI. Simply edit a page, then instead of committing directly to the branch, create a pull request. Once created, the review app is ready to go. When the pull request is accepted, the review app is deleted and the application is deployed to your staging org.
 
-If you want to work against the latest buildpacks, update the version # (or remove entirely).
+If you want to work against the latest buildpacks, update the version # (or remove entirely) in `app.json`.
 
 ## Clean up
 

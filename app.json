@@ -1,23 +1,18 @@
 {
   "name": "salesforce-dx-pipeline-sample",
   "version": "0.0.1",
-  "description": "Test application for the salesforce-dx-buildpack",
+  "description": "Test application for the salesforce-buildpack",
   "repository": "https://github.com/wadewegner/salesforce-dx-pipeline-sample",
-  "author": "",
+  "author": "Wade Wegner",
   "license": "ALv2",
-  "bugs": {
-    "url": "https://github.com/wadewegner/salesforce-dx-pipeline-sample/issues"
-  },
-  "homepage":
-    "https://github.com/wadewegner/salesforce-dx-pipeline-sample#readme",
-  "dependencies": {},
-  "devDependencies": {},
+  "bugs": "https://github.com/wadewegner/salesforce-dx-pipeline-sample/issues",
+  "homepage": "https://github.com/wadewegner/salesforce-dx-pipeline-sample#readme",
   "buildpacks": [
     {
       "url": "https://github.com/heroku/salesforce-cli-buildpack#v3"
     },
     {
-      "url": "https://github.com/heroku/salesforce-buildpack#v1"
+      "url": "https://github.com/heroku/salesforce-buildpack#v2"
     }
   ],
   "env": {
@@ -34,8 +29,7 @@
   "environments": {
     "test": {
       "scripts": {
-        "test-setup":
-          "./vendor/sfdx/release.sh ci-$HEROKU_TEST_RUN_COMMIT_VERSION && ./bin/test-setup.sh",
+        "test-setup": "./vendor/sfdx/release.sh ci-$HEROKU_TEST_RUN_COMMIT_VERSION && ./bin/test-setup.sh",
         "test": "./bin/test.sh"
       },
       "formation": {
