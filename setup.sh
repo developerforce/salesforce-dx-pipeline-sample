@@ -8,7 +8,6 @@ echo ""
 #################################################################
 
 set -o errexit    # always exit on error
-set -o pipefail   # don't ignore exit codes when piping output
 set -o nounset    # fail on unset variables
 
 #################################################################
@@ -96,24 +95,50 @@ heroku config:set SFDX_BUILDPACK_DEBUG=true -a $HEROKU_STAGING_APP_NAME
 heroku config:set SFDX_BUILDPACK_DEBUG=true -a $HEROKU_PROD_APP_NAME
 
 # Setup sfdxUrl's for Dev Hub auth
-#devHubSfdxAuthUrl=$(sfdx force:org:display --verbose -u $DEV_HUB_USERNAME --json | jq -r .result.sfdxAuthUrl)
 devHubSfdxAuthUrl=$(sfdx force:org:display --verbose -u $DEV_HUB_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
-heroku config:set SFDX_DEV_HUB_AUTH_URL=$devHubSfdxAuthUrl -a $HEROKU_DEV_APP_NAME
-heroku config:set SFDX_DEV_HUB_AUTH_URL=$devHubSfdxAuthUrl -a $HEROKU_STAGING_APP_NAME
-heroku config:set SFDX_DEV_HUB_AUTH_URL=$devHubSfdxAuthUrl -a $HEROKU_PROD_APP_NAME
+if [[ "$devHubSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
+  heroku config:set SFDX_DEV_HUB_AUTH_URL=$devHubSfdxAuthUrl -a $HEROKU_DEV_APP_NAME
+  heroku config:set SFDX_DEV_HUB_AUTH_URL=$devHubSfdxAuthUrl -a $HEROKU_STAGING_APP_NAME
+  heroku config:set SFDX_DEV_HUB_AUTH_URL=$devHubSfdxAuthUrl -a $HEROKU_PROD_APP_NAME
+else
+  echo ""
+  echo "ERROR: Did not find 'Sfdx Auth Url' output from command: sfdx force:org:display --verbose -u $DEV_HUB_USERNAME"
+  echo ""
+  exit 1
+fi
 
-# Setup sfdxUrl's for Org auth
-#devSfdxAuthUrl=$(sfdx force:org:display --verbose -u $DEV_USERNAME --json | jq -r .result.sfdxAuthUrl)
+# Setup sfdxUrl for Dev Org auth
 devSfdxAuthUrl=$(sfdx force:org:display --verbose -u $DEV_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
-heroku config:set SFDX_AUTH_URL=$devSfdxAuthUrl -a $HEROKU_DEV_APP_NAME
+if [[ "$devSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
+  heroku config:set SFDX_AUTH_URL=$devSfdxAuthUrl -a $HEROKU_DEV_APP_NAME
+else
+  echo ""
+  echo "ERROR: Did not find 'Sfdx Auth Url' output from command: sfdx force:org:display --verbose -u $DEV_USERNAME"
+  echo ""
+  exit 1
+fi
 
-#stagingSfdxAuthUrl=$(sfdx force:org:display --verbose -u $STAGING_USERNAME --json | jq -r .result.sfdxAuthUrl)
+# Setup sfdxUrl for Staging Org auth
 stagingSfdxAuthUrl=$(sfdx force:org:display --verbose -u $STAGING_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
-heroku config:set SFDX_AUTH_URL=$stagingSfdxAuthUrl -a $HEROKU_STAGING_APP_NAME
+if [[ "$stagingSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
+  heroku config:set SFDX_AUTH_URL=$stagingSfdxAuthUrl -a $HEROKU_STAGING_APP_NAME
+else
+  echo ""
+  echo "ERROR: Did not find 'Sfdx Auth Url' output from command: sfdx force:org:display --verbose -u $STAGING_USERNAME"
+  echo ""
+  exit 1
+fi
 
-#prodSfdxAuthUrl=$(sfdx force:org:display --verbose -u $PROD_USERNAME --json | jq -r .result.sfdxAuthUrl)
-prodSfdxAuthUrl=$(sfdx force:org:display --verbose -u $PROD_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
-heroku config:set SFDX_AUTH_URL=$prodSfdxAuthUrl -a $HEROKU_PROD_APP_NAME
+# Setup sfdxUrl for Prod Org auth
+prodSfdxAuthUrl=$(sfdx force:org:display --verbose -u $PROD_USERNAME | grep "Sfdx Auth Url2" | awk '{ print $4 }')
+if [[ "$prodSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
+  heroku config:set SFDX_AUTH_URL=$prodSfdxAuthUrl -a $HEROKU_PROD_APP_NAME
+else
+  echo ""
+  echo "ERROR: Did not find 'Sfdx Auth Url' output from command: sfdx force:org:display --verbose -u $PROD_USERNAME"
+  echo ""
+  exit 1
+fi
 
 # Add buildpacks to apps (to use latest remove version info)
 heroku buildpacks:add -i 1 https://github.com/heroku/salesforce-cli-buildpack#v3 -a $HEROKU_DEV_APP_NAME
