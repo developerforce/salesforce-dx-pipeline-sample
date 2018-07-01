@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-#################################################################
-echo ""
-echo "For the latest setup.sh script, download a copy from the Salesforce Buildpack for Heroku project:"
-echo "https://github.com/heroku/salesforce-buildpack/blob/master/scripts/setup.sh"
-echo ""
-#################################################################
-
 set -o errexit    # always exit on error
 set -o nounset    # fail on unset variables
 
@@ -20,7 +13,7 @@ set -o nounset    # fail on unset variables
 HEROKU_TEAM_NAME=""
 
 # Descriptive name for the Heroku app
-HEROKU_APP_NAME="YOUR_APP_NAME"
+HEROKU_APP_NAME="myapp123"
 
 # Name of the Heroku apps you'll use
 HEROKU_DEV_APP_NAME="$HEROKU_APP_NAME-dev"
@@ -166,3 +159,9 @@ heroku ci:config:set -p $HEROKU_PIPELINE_NAME HEROKU_APP_NAME="$HEROKU_APP_NAME"
 # (only uncomment these two lines if you have already connected your GitHub account with Heroku)
 #heroku pipelines:connect $HEROKU_PIPELINE_NAME --repo $GITHUB_REPO
 #heroku reviewapps:enable -p $HEROKU_PIPELINE_NAME -a $HEROKU_DEV_APP_NAME --autodeploy --autodestroy
+
+echo ""
+echo "Heroku pipelines setup script completed"
+echo ""
+echo "If you need to undo these changes, run ./destroy$HEROKU_APP_NAME.sh"
+echo ""
