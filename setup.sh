@@ -130,7 +130,7 @@ else
 fi
 
 # Setup sfdxUrl for Prod Org auth
-prodSfdxAuthUrl=$(sfdx force:org:display --verbose -u $PROD_USERNAME | grep "Sfdx Auth Url2" | awk '{ print $4 }')
+prodSfdxAuthUrl=$(sfdx force:org:display --verbose -u $PROD_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
 if [[ "$prodSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
   heroku config:set SFDX_AUTH_URL=$prodSfdxAuthUrl -a $HEROKU_PROD_APP_NAME
 else
