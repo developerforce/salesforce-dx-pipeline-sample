@@ -33,8 +33,8 @@ PROD_USERNAME="ProdOrg"
 PACKAGE_NAME="YOUR_PACKAGE_NAME"
 
 # Repository with your code (username/repo)
-# (only uncomment this line if you have already connected your GitHub account with Heroku)
-#GITHUB_REPO="CodeyTheBear/salesforce-dx-pipeline-sample"
+# (only specify a value if you have already connected your GitHub account with Heroku)
+GITHUB_REPO=
 
 ### Setup script
 
@@ -155,10 +155,12 @@ heroku ci:config:set -p $HEROKU_PIPELINE_NAME SFDX_CREATE_PACKAGE_VERSION=false
 heroku ci:config:set -p $HEROKU_PIPELINE_NAME SFDX_PACKAGE_NAME="$PACKAGE_NAME"
 heroku ci:config:set -p $HEROKU_PIPELINE_NAME HEROKU_APP_NAME="$HEROKU_APP_NAME"
 
-# Setup your pipeline
-# (only uncomment these two lines if you have already connected your GitHub account with Heroku)
-#heroku pipelines:connect $HEROKU_PIPELINE_NAME --repo $GITHUB_REPO
-#heroku reviewapps:enable -p $HEROKU_PIPELINE_NAME -a $HEROKU_DEV_APP_NAME --autodeploy --autodestroy
+# Connect Pipeline to GitHub repo
+# (will only work if you've already authorized Heroku's access to your GitHub account)
+if [ ! "$GITHUB_REPO" == "" ]; then
+  heroku pipelines:connect $HEROKU_PIPELINE_NAME --repo $GITHUB_REPO
+  heroku reviewapps:enable -p $HEROKU_PIPELINE_NAME -a $HEROKU_DEV_APP_NAME --autodeploy --autodestroy
+fi
 
 echo ""
 echo "Heroku pipelines setup script completed"
