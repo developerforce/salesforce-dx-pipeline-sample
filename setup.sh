@@ -33,7 +33,8 @@ PROD_USERNAME="ProdOrg"
 PACKAGE_NAME="YOUR_PACKAGE_NAME"
 
 # Repository with your code (username/repo)
-# (only specify a value if you have already connected your GitHub account with Heroku)
+# Only specify a value if you have already connected your GitHub account with Heroku,
+# otherwise connect GitHub to your pipeline via the Heroku Dashboard after the script finishes.
 GITHUB_REPO=
 
 ### Setup script
