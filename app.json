@@ -2,11 +2,11 @@
   "name": "salesforce-dx-pipeline-sample",
   "version": "0.0.1",
   "description": "Test application for the salesforce-buildpack",
-  "repository": "https://github.com/wadewegner/salesforce-dx-pipeline-sample",
-  "author": "Wade Wegner",
+  "repository": "https://github.com/TrailheadTechnicalCurriculum/salesforce-dx-pipeline-sample",
+  "author": "Trailhead",
   "license": "ALv2",
-  "bugs": "https://github.com/wadewegner/salesforce-dx-pipeline-sample/issues",
-  "homepage": "https://github.com/wadewegner/salesforce-dx-pipeline-sample#readme",
+  "bugs": "https://github.com/TrailheadTechnicalCurriculum/salesforce-dx-pipeline-sample/issues",
+  "homepage": "https://github.com/TrailheadTechnicalCurriculum/salesforce-dx-pipeline-sample#readme",
   "buildpacks": [
     {
       "url": "https://github.com/heroku/salesforce-cli-buildpack#v3"
