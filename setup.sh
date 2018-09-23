@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-set -o errexit    # always exit on error
-set -o nounset    # fail on unset variables
+#set -o errexit    # always exit on error
+#set -o nounset    # fail on unset variables
 
 #################################################################
 # Script to setup a fully configured pipeline for Salesforce DX #
