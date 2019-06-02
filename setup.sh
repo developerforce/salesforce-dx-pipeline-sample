@@ -13,7 +13,7 @@
 HEROKU_TEAM_NAME=""
 
 # Descriptive name for the Heroku app
-HEROKU_APP_NAME="YOUR_APP_NAME"
+HEROKU_APP_NAME="sfdc2019jef"
 
 # Name of the Heroku apps you'll use
 HEROKU_DEV_APP_NAME="$HEROKU_APP_NAME-dev"
@@ -30,7 +30,7 @@ STAGING_USERNAME="TestOrg"
 PROD_USERNAME="ProdOrg"
 
 # Your package name from force:package:list
-PACKAGE_NAME="YOUR_PACKAGE_NAME"
+PACKAGE_NAME="SamplePkg1"
 
 # Repository with your code (username/repo)
 # Only specify a value if you have already connected your GitHub account with Heroku,
@@ -103,7 +103,7 @@ fi
 
 # Setup sfdxUrl for Dev Org auth
 devSfdxAuthUrl=$(sfdx force:org:display --verbose -u $DEV_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
-if [[ "$devSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
+if [[ "$devSfdxAuthUrl" =~ ^force://.*\.salesforce\.com/$ ]]; then
   heroku config:set SFDX_AUTH_URL=$devSfdxAuthUrl -a $HEROKU_DEV_APP_NAME
 else
   echo ""
@@ -114,7 +114,7 @@ fi
 
 # Setup sfdxUrl for Staging Org auth
 stagingSfdxAuthUrl=$(sfdx force:org:display --verbose -u $STAGING_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
-if [[ "$stagingSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
+if [[ "$stagingSfdxAuthUrl" =~ ^force://.*\.salesforce\.com/$ ]]; then
   heroku config:set SFDX_AUTH_URL=$stagingSfdxAuthUrl -a $HEROKU_STAGING_APP_NAME
 else
   echo ""
@@ -125,7 +125,7 @@ fi
 
 # Setup sfdxUrl for Prod Org auth
 prodSfdxAuthUrl=$(sfdx force:org:display --verbose -u $PROD_USERNAME | grep "Sfdx Auth Url" | awk '{ print $4 }')
-if [[ "$prodSfdxAuthUrl" =~ ^force://.*\.salesforce\.com$ ]]; then
+if [[ "$prodSfdxAuthUrl" =~ ^force://.*\.salesforce\.com/$ ]]; then
   heroku config:set SFDX_AUTH_URL=$prodSfdxAuthUrl -a $HEROKU_PROD_APP_NAME
 else
   echo ""
