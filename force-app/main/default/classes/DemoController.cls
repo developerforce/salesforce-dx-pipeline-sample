@@ -1,6 +1,6 @@
 public with sharing class DemoController {
 
-    private String appVersion = '1.0.1';
+    private String appVersion = '1.0.2';
 
     /**
      * An empty constructor for the testing
