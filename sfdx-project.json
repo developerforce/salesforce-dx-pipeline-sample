@@ -2,10 +2,16 @@
     "packageDirectories": [
         {
             "path": "force-app",
-            "default": true
+            "default": true,
+            "package": "SamplePkg2",
+            "versionName": "ver 0.8",
+            "versionNumber": "0.1.0.NEXT"
         }
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "43.0"
+    "sourceApiVersion": "43.0",
+    "packageAliases": {
+        "SamplePkg2": "0Ho2E000000CaXySAK"
+    }
 }
