@@ -1,15 +1,18 @@
 public with sharing class DemoController {
-    private string version = '1.0.5';
+	private static final String version = '1.0.6';
     /**
      * An empty constructor for the testing
      */
-    public DemoController() {}
+    public DemoController() {
+        System.debug('Construct');
+    }
+
 
     /**
      * Get the version of the SFDX demo app
      */
     public String getAppVersion() {       
-        System.debug('test');
+        System.debug('getAppVersion');
         return version;
     }
 }
