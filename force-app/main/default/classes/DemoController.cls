@@ -1,5 +1,5 @@
 public with sharing class DemoController {
-	private static final String version = '1.0.6';
+	private static final String version = '1.0.7';
     /**
      * An empty constructor for the testing
      */
