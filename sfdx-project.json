@@ -4,7 +4,7 @@
             "path": "force-app",
             "default": true,
             "package": "SamplePkg2",
-            "versionName": "ver 0.7",
+            "versionName": "ver 0.8",
             "versionNumber": "0.1.0.NEXT"
         }
     ],
