@@ -4,7 +4,7 @@ public with sharing class DemoController {
      * An empty constructor for the testing
      */
     public DemoController() {
-        System.debug('Construct');
+        System.debug('Constructor');
     }
 
 
@@ -12,7 +12,7 @@ public with sharing class DemoController {
      * Get the version of the SFDX demo app
      */
     public String getAppVersion() {       
-        System.debug('getAppVersion');
+        System.debug('getAppVersions');
         return version;
     }
 }
