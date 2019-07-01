@@ -1,5 +1,5 @@
 public with sharing class DemoController {
-    private string version = '1.0.3';
+    private string version = '1.0.4';
     /**
      * An empty constructor for the testing
      */
